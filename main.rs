@@ -129,10 +129,12 @@ fn main() -> Result<(), Box<dyn Error>> {
     let weather_data: WeatherResponse = client.get(&url).send()?.json()?;
 
     if let Some(temp) = weather_data.main.temp {
+        let celsius = temp - 273.15;
+        let fahrenheit = celsius * 9.0 / 5.0 + 32.0;
         println!(
             "Temperature: {:.2}C / {:.2}F ",
-            temp - 273.15,
-            (temp - 273.15) * 9.0 / 5.0 + 32.0
+            celsius,
+            fahrenheit
         )
     } else {
         println!("main not defined")
